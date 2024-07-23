@@ -1,0 +1,8 @@
+item { 
+	name:'yes'
+	id:1
+}
+item { 
+	name:'no'
+	id:2
+}

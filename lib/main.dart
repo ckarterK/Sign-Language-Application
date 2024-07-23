@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 void main() async {
+  debugPrint('Initializing cameras...');
   await initializeCameras();
+  debugPrint('Cameras initialized.');
   runApp(const MainApp());
 }
 
@@ -12,6 +14,7 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Building MainApp...');
     return MaterialApp(
       title: 'Sign Language Translator',
       theme: ThemeData(
@@ -37,6 +40,7 @@ class _SignLanguageTranslatorScreenState
 
   @override
   void dispose() {
+    debugPrint('Disposing audio player...');
     _audioPlayer.dispose();
     super.dispose();
   }
@@ -44,19 +48,22 @@ class _SignLanguageTranslatorScreenState
   void _playAudio() async {
     String url = "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3";
     await _audioPlayer.play(UrlSource(url));
-    print('Audio playing');
+    debugPrint('Audio playing');
   }
 
   void _pauseAudio() {
+    debugPrint('Pausing audio...');
     _audioPlayer.pause();
   }
 
   void _stopAudio() {
+    debugPrint('Stopping audio...');
     _audioPlayer.stop();
   }
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('Building SignLanguageTranslatorScreen...');
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -85,7 +92,7 @@ class _SignLanguageTranslatorScreenState
                     ),
                     Container(
                       width: 300,
-                      height: 250,
+                      height: 220,
                       decoration: BoxDecoration(
                         color: Colors.grey[300],
                         border: Border.all(color: Colors.black),
