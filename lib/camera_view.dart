@@ -18,8 +18,9 @@ class CameraView extends StatefulWidget {
 }
 
 class CameraViewState extends State<CameraView> {
-  CameraController? controller; // Changed to nullable
+  CameraController? controller;
   bool _isDetecting = false;
+  List<String> _detectedObjectNames = [];
 
   @override
   void initState() {
@@ -50,6 +51,11 @@ class CameraViewState extends State<CameraView> {
     
       if (recognitions != null && recognitions.isNotEmpty) {
         debugPrint('Recognitions: $recognitions');
+        for (var recognition in recognitions) {
+          if (recognition['detectedClass'] != null) {
+            _detectedObjectNames.add(recognition['detectedClass']);
+          }
+        }
       } else {
         debugPrint('No recognitions detected.');
       }
@@ -74,6 +80,9 @@ class CameraViewState extends State<CameraView> {
         _objectRecognition(image);
       }
     });
+
+    // Stop object detection after 15 seconds
+    Future.delayed(Duration(seconds: 15), stopObjectDetection);
   }
 
   void stopObjectDetection() {
@@ -86,6 +95,7 @@ class CameraViewState extends State<CameraView> {
       _isDetecting = false;
     });
     controller!.stopImageStream();
+    debugPrint('Detected objects: $_detectedObjectNames');
   }
 
   Future<void> initializeCamera() async {
